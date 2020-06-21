@@ -9,6 +9,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+      ),
       home: Visualizer(),
     );
   }
@@ -38,28 +41,53 @@ class _VisualizerState extends State<Visualizer> {
         child: ListView(
           children: <Widget>[
             // Title
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.all(30),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      "Box\nVisualizer",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 50,
-                        foreground: Paint()..shader = linearGradient,
-                      ),
+            Row(
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.all(30),
+                    child: Column(
+                      children: <Widget>[
+                        Text(
+                          "Box\nVisualizer",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 50,
+                            foreground: Paint()..shader = linearGradient,
+                          ),
+                        ),
+                        Container(
+                          height: 10,
+                          width: 220,
+                          color: Colors.black,
+                        ),
+                      ],
                     ),
-                    Container(
-                      height: 10,
-                      width: 220,
-                      color: Colors.black,
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+                Container(
+                  height: 100,
+                  width: 100,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.replay,
+                      size: 60,
+                    ),
+                    tooltip: "Default",
+                    onPressed: () {
+                      setState(() {
+                        bxRadius = 0;
+                        opacity = 0.5;
+                        brRadius = 10;
+                        spRadius = 2;
+                        x = 0;
+                        y = 0;
+                      });
+                    },
+                  ),
+                ),
+              ],
             ),
             // End of Title
 
@@ -86,41 +114,361 @@ class _VisualizerState extends State<Visualizer> {
 
             SizedBox(height: 30),
 
+            // Setting
             Padding(
               padding: const EdgeInsets.only(top: 50, left: 30),
-              child: Row(
+              child: Column(
                 children: <Widget>[
-                  Text(
-                    "Border Radius:",
-                  ),
-                  SizedBox(width: 20),
-                  Container(
-                    height: 30,
-                    width: 40,
-                    child: TextField(
-                      onSubmitted: (value) => {
-                        setState(() {
-                          bxRadius = double.parse(value);
-                        }),
-                      },
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(5),
-                        hintText: "Yo",
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.black,
-                            width: 5,
-                          )
-                        )
+                  // Box Shadow sub-header
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Box Properties",
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  )
+                  ),
+                  // End of sub-header
+                  SizedBox(height: 10),
+
+                  // Border Radius : | input box |
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        width: 125,
+                        child: Text(
+                          "Border Radius:",
+                        ),
+                      ),
+                      Container(
+                        height: 30,
+                        width: 55,
+                        child: TextField(
+                          enabled:
+                              false, // TO-DO : a validator to prevent out of bound values
+                          onChanged: (value) {
+                            setState(() {
+                              bxRadius = double.parse(value);
+                            });
+                          },
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(5),
+                            hintText: "${bxRadius.toStringAsPrecision(4)}",
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                                width: 5,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  // End of Border Radius : | i_b |
+
+                  // Slider
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      width: 300,
+                      child: SliderTheme(
+                        data: SliderThemeData(
+                          trackShape: CustomTrackShape(),
+                        ),
+                        child: Slider(
+                          value: bxRadius,
+                          onChanged: (value) {
+                            setState(() {
+                              bxRadius = value;
+                            });
+                          },
+                          min: 0,
+                          max: 100,
+                        ),
+                      ),
+                    ),
+                  ),
+                  // End of Slider
+
+                  // Box Shadow sub-header
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Box Shadow",
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  // End of sub-header
+                  SizedBox(height: 10),
+
+                  // Offset
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        width: 125,
+                        child: Text(
+                          "Offset (x, y):",
+                        ),
+                      ),
+                      Container(
+                        height: 30,
+                        width: 55,
+                        child: TextField(
+                          onChanged: (value) {
+                            setState(() {
+                              x = double.parse(value);
+                            });
+                          },
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(5),
+                            hintText: "${x.toStringAsPrecision(4)}",
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                                width: 5,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 20),
+                      Container(
+                        height: 30,
+                        width: 55,
+                        child: TextField(
+                          onChanged: (value) {
+                            setState(() {
+                              y = double.parse(value);
+                            });
+                          },
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(5),
+                            hintText: "${y.toStringAsPrecision(4)}",
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                                width: 5,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // End of Offset
+                  SizedBox(height: 20),
+
+                  // Opacity : | input box |
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        width: 125,
+                        child: Text(
+                          "Opacity:",
+                        ),
+                      ),
+                      Container(
+                        height: 30,
+                        width: 55,
+                        child: TextField(
+                          enabled:
+                              false, // TO-DO : a validator to prevent out of bound values
+                          onChanged: (value) {
+                            setState(() {
+                              opacity = double.parse(value);
+                            });
+                          },
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(5),
+                            hintText: "${opacity.toStringAsPrecision(3)}",
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                                width: 5,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  // End of Opacity : | i_b |
+
+                  // Slider
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      width: 300,
+                      child: SliderTheme(
+                        data: SliderThemeData(
+                          trackShape: CustomTrackShape(),
+                        ),
+                        child: Slider(
+                          value: opacity,
+                          onChanged: (value) {
+                            setState(() {
+                              opacity = value;
+                            });
+                          },
+                          min: 0,
+                          max: 1,
+                        ),
+                      ),
+                    ),
+                  ),
+                  // End of Slider
+
+                  // Blur Radius : | input box |
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        width: 125,
+                        child: Text(
+                          "Blur Radius:",
+                        ),
+                      ),
+                      Container(
+                        height: 30,
+                        width: 55,
+                        child: TextField(
+                          enabled:
+                              false, // TO-DO : a validator to prevent out of bound values
+                          onChanged: (value) {
+                            setState(() {
+                              brRadius = double.parse(value);
+                            });
+                          },
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(5),
+                            hintText: "${brRadius.toStringAsPrecision(4)}",
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                                width: 5,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  // End of Blur Radius : | i_b |
+
+                  // Slider
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      width: 300,
+                      child: SliderTheme(
+                        data: SliderThemeData(
+                          trackShape: CustomTrackShape(),
+                        ),
+                        child: Slider(
+                          value: brRadius,
+                          onChanged: (value) {
+                            setState(() {
+                              brRadius = value;
+                            });
+                          },
+                          min: 0,
+                          max: 50,
+                        ),
+                      ),
+                    ),
+                  ),
+                  // End of Slider
+
+                  // Spread Radius : | input box |
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        width: 125,
+                        child: Text(
+                          "Spread Radius:",
+                        ),
+                      ),
+                      Container(
+                        height: 30,
+                        width: 55,
+                        child: TextField(
+                          enabled:
+                              false, // TO-DO : a validator to prevent out of bound values
+                          onChanged: (value) {
+                            setState(() {
+                              spRadius = double.parse(value);
+                            });
+                          },
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(5),
+                            hintText: "${spRadius.toStringAsPrecision(4)}",
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                                width: 5,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // End of Spread Radius : | i_b |
+
+                  // Slider
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      width: 300,
+                      child: SliderTheme(
+                        data: SliderThemeData(
+                          trackShape: CustomTrackShape(),
+                        ),
+                        child: Slider(
+                          value: spRadius,
+                          onChanged: (value) {
+                            setState(() {
+                              spRadius = value;
+                            });
+                          },
+                          min: 0,
+                          max: 100,
+                        ),
+                      ),
+                    ),
+                  ),
+                  // End of Slider
+
                 ],
               ),
             ),
+            // End of Setting
+            SizedBox(height: 20), // I'm not proud of this
           ],
         ),
       ),
     );
+  }
+}
+
+class CustomTrackShape extends RoundedRectSliderTrackShape {
+  Rect getPreferredRect({
+    @required RenderBox parentBox,
+    Offset offset = Offset.zero,
+    @required SliderThemeData sliderTheme,
+    bool isEnabled = false,
+    bool isDiscrete = false,
+  }) {
+    final double trackHeight = sliderTheme.trackHeight;
+    final double trackLeft = offset.dx;
+    final double trackTop =
+        offset.dy + (parentBox.size.height - trackHeight) / 2;
+    final double trackWidth = parentBox.size.width;
+    return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
   }
 }
