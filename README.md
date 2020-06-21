@@ -14,4 +14,4 @@ A super simple real-time Box Shadow emulator that follows the syntactical rule o
 - [ ] Default to specific properties only 
 - [ ] Color picker
 - [ ] Validator for the TextField (they're all disabled atm)
-- [ ] A better design. It looks so fugly right now
+- [ ] A better design
