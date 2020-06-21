@@ -20,11 +20,19 @@ class Visualizer extends StatefulWidget {
 }
 
 class _VisualizerState extends State<Visualizer> {
+
+  double bxRadius = 0;
+  double opacity = 0.5;
+  double brRadius = 10;
+  double spRadius = 2;
+  double x = 0;
+  double y = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
+        child: ListView(
           children: <Widget>[
             // Title
             Align(
@@ -59,9 +67,26 @@ class _VisualizerState extends State<Visualizer> {
               child: Container(
                 height: 170,
                 width: 170,
-                color: Colors.white,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(bxRadius),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(opacity),
+                      blurRadius: brRadius,
+                      spreadRadius: spRadius,
+                      offset: Offset(x, y),
+                    )
+                  ]
+                ),
               ),
             ),
+
+            SizedBox(height: 30),
+
+            TextField(
+
+            )
 
           ],
         ),
