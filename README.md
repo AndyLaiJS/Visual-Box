@@ -1,6 +1,6 @@
-# boxShadow_visualizer
+# Box Visualizer
 
-A new Flutter project.
+A super simple real-time Box Shadow emulator that follows the syntactical rule of Flutter in generating the Box Shadow
 
 ## Getting Started
 
