@@ -20,7 +20,6 @@ class Visualizer extends StatefulWidget {
 }
 
 class _VisualizerState extends State<Visualizer> {
-
   double bxRadius = 0;
   double opacity = 0.5;
   double brRadius = 10;
@@ -44,7 +43,6 @@ class _VisualizerState extends State<Visualizer> {
               child: Padding(
                 padding: const EdgeInsets.all(30),
                 child: Column(
-                  
                   children: <Widget>[
                     Text(
                       "Box\nVisualizer",
@@ -60,18 +58,17 @@ class _VisualizerState extends State<Visualizer> {
                       color: Colors.black,
                     ),
                   ],
-
                 ),
               ),
             ),
             // End of Title
 
-            SizedBox(height: 30),
+            SizedBox(height: 50),
 
             Center(
               child: Container(
                 height: 170,
-                width: 170,
+                width: 270,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(bxRadius),
                   color: Colors.white,
@@ -81,18 +78,46 @@ class _VisualizerState extends State<Visualizer> {
                       blurRadius: brRadius,
                       spreadRadius: spRadius,
                       offset: Offset(x, y),
-                    )
-                  ]
+                    ),
+                  ],
                 ),
               ),
             ),
 
             SizedBox(height: 30),
 
-            TextField(
-
-            )
-
+            Padding(
+              padding: const EdgeInsets.only(top: 50, left: 30),
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    "Border Radius:",
+                  ),
+                  SizedBox(width: 20),
+                  Container(
+                    height: 30,
+                    width: 40,
+                    child: TextField(
+                      onSubmitted: (value) => {
+                        setState(() {
+                          bxRadius = double.parse(value);
+                        }),
+                      },
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(5),
+                        hintText: "Yo",
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                            width: 5,
+                          )
+                        )
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),
