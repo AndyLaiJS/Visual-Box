@@ -28,6 +28,10 @@ class _VisualizerState extends State<Visualizer> {
   double x = 0;
   double y = 0;
 
+  final Shader linearGradient = LinearGradient(
+    colors: <Color>[Color(0xffDA44bb), Color(0xff8921aa)],
+  ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,6 +51,7 @@ class _VisualizerState extends State<Visualizer> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 50,
+                        foreground: Paint()..shader = linearGradient,
                       ),
                     ),
                     Container(
