@@ -28,12 +28,12 @@ class _VisualizerState extends State<Visualizer>
     with SingleTickerProviderStateMixin {
   double lebar = 270;
   double tinggi = 170;
-  double bxRadius = 0;
-  double opacity = 0.5;
-  double brRadius = 10;
-  double spRadius = 2;
+  double bxRadius = 20;
+  double opacity = 0.3;
+  double brRadius = 50;
+  double spRadius = -11;
   double x = 0;
-  double y = 0;
+  double y = 30;
 
   final lebarHolder = TextEditingController();
   final tinggiHolder = TextEditingController();
@@ -120,12 +120,12 @@ class _VisualizerState extends State<Visualizer>
                         setState(() {
                           lebar = 270;
                           tinggi = 170;
-                          bxRadius = 0;
-                          opacity = 0.5;
-                          brRadius = 10;
-                          spRadius = 2;
+                          bxRadius = 20;
+                          opacity = 0.3;
+                          brRadius = 50;
+                          spRadius = -11;
                           x = 0;
-                          y = 0;
+                          y = 30;
                         });
                       },
                     ),
