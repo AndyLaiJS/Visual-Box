@@ -23,7 +23,7 @@ class Visualizer extends StatefulWidget {
   _VisualizerState createState() => _VisualizerState();
 }
 
-class _VisualizerState extends State<Visualizer> {
+class _VisualizerState extends State<Visualizer> with SingleTickerProviderStateMixin {
   double bxRadius = 0;
   double opacity = 0.5;
   double brRadius = 10;
@@ -35,10 +35,34 @@ class _VisualizerState extends State<Visualizer> {
   final opacityHolder = TextEditingController();
   final brHolder = TextEditingController();
   final spHolder = TextEditingController();
-  
+
   final Shader linearGradient = LinearGradient(
     colors: <Color>[Color(0xffDA44bb), Color(0xff8921aa)],
   ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
+
+  AnimationController controller;
+  Animation<double> animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = AnimationController(
+      duration: Duration(milliseconds: 550),
+      vsync: this,
+    );
+
+    animation = CurvedAnimation(
+      parent: controller,
+      curve: Curves.easeInOutQuad,
+    ).drive(Tween(begin: 1, end: 0));
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,25 +96,29 @@ class _VisualizerState extends State<Visualizer> {
                     ),
                   ),
                 ),
-                Container(
-                  height: 100,
-                  width: 100,
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.replay,
-                      size: 60,
+                RotationTransition(
+                  turns: animation,
+                  child: Container(
+                    height: 100,
+                    width: 100,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.replay,
+                        size: 60,
+                      ),
+                      tooltip: "Default",
+                      onPressed: () {
+                        controller..reset()..forward();
+                        setState(() {
+                          bxRadius = 0;
+                          opacity = 0.5;
+                          brRadius = 10;
+                          spRadius = 2;
+                          x = 0;
+                          y = 0;
+                        });
+                      },
                     ),
-                    tooltip: "Default",
-                    onPressed: () {
-                      setState(() {
-                        bxRadius = 0;
-                        opacity = 0.5;
-                        brRadius = 10;
-                        spRadius = 2;
-                        x = 0;
-                        y = 0;
-                      });
-                    },
                   ),
                 ),
               ],
@@ -98,7 +126,7 @@ class _VisualizerState extends State<Visualizer> {
             // End of Title
 
             SizedBox(height: 50),
-            
+
             // Our Model Box
             Center(
               child: Container(
@@ -481,7 +509,6 @@ class _VisualizerState extends State<Visualizer> {
                     ),
                   ),
                   // End of Slider
-
                 ],
               ),
             ),
