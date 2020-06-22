@@ -13,5 +13,5 @@ A super simple real-time Box Shadow emulator that follows the syntactical rule o
 - [ ] Copy configuration into Flutter code
 - [ ] Default to specific properties only 
 - [ ] Color picker
-- [ ] Validator for the TextField (they're all disabled atm)
+- [x] Validator for the TextField (they're all disabled atm)
 - [ ] A better design
