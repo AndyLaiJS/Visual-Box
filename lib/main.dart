@@ -24,6 +24,9 @@ class Visualizer extends StatefulWidget {
 }
 
 class _VisualizerState extends State<Visualizer> with SingleTickerProviderStateMixin {
+
+  double lebar = 270;
+  double tinggi = 170;
   double bxRadius = 0;
   double opacity = 0.5;
   double brRadius = 10;
@@ -31,6 +34,8 @@ class _VisualizerState extends State<Visualizer> with SingleTickerProviderStateM
   double x = 0;
   double y = 0;
 
+  final lebarHolder = TextEditingController();
+  final tinggiHolder = TextEditingController();
   final bxHolder = TextEditingController();
   final opacityHolder = TextEditingController();
   final brHolder = TextEditingController();
@@ -110,6 +115,8 @@ class _VisualizerState extends State<Visualizer> with SingleTickerProviderStateM
                       onPressed: () {
                         controller..reset()..forward();
                         setState(() {
+                          lebar = 270;
+                          tinggi = 170;
                           bxRadius = 0;
                           opacity = 0.5;
                           brRadius = 10;
@@ -130,8 +137,8 @@ class _VisualizerState extends State<Visualizer> with SingleTickerProviderStateM
             // Our Model Box
             Center(
               child: Container(
-                height: 170,
-                width: 270,
+                height: tinggi,
+                width: lebar,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(bxRadius),
                   color: Colors.white,
@@ -168,6 +175,136 @@ class _VisualizerState extends State<Visualizer> with SingleTickerProviderStateM
                   ),
                   // End of sub-header
                   SizedBox(height: 10),
+
+                  // Box Height : | input box |
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        width: 125,
+                        child: Text(
+                          "Box Width:",
+                        ),
+                      ),
+                      Container(
+                        height: 30,
+                        width: 55,
+                        child: TextField(
+                          controller: lebarHolder,
+                          onChanged: (value) {
+                            setState(() {
+                              double val = double.parse(value);
+                              if (1 <= val && val <= 340) {
+                                lebar = double.parse(value);
+                              } else {
+                                lebar = lebar;
+                              }
+                            });
+                          },
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(5),
+                            hintText: "${lebar.toStringAsPrecision(4)}",
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                                width: 5,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  // End of Box Height : | i_b |
+
+                  // Slider
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      width: 300,
+                      child: SliderTheme(
+                        data: SliderThemeData(
+                          trackShape: CustomTrackShape(),
+                        ),
+                        child: Slider(
+                          value: lebar,
+                          onChanged: (value) {
+                            lebarHolder.clear();
+                            setState(() {
+                              lebar = value;
+                            });
+                          },
+                          min: 1,
+                          max: 340,
+                        ),
+                      ),
+                    ),
+                  ),
+                  // End of Slider
+
+                  // Box Height : | input box |
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        width: 125,
+                        child: Text(
+                          "Box Height:",
+                        ),
+                      ),
+                      Container(
+                        height: 30,
+                        width: 55,
+                        child: TextField(
+                          controller: tinggiHolder,
+                          onChanged: (value) {
+                            setState(() {
+                              double val = double.parse(value);
+                              if (1 <= val && val <= 300) {
+                                tinggi = double.parse(value);
+                              } else {
+                                tinggi = tinggi;
+                              }
+                            });
+                          },
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(5),
+                            hintText: "${tinggi.toStringAsPrecision(4)}",
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                                width: 5,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  // End of Box Height : | i_b |
+
+                  // Slider
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      width: 300,
+                      child: SliderTheme(
+                        data: SliderThemeData(
+                          trackShape: CustomTrackShape(),
+                        ),
+                        child: Slider(
+                          value: tinggi,
+                          onChanged: (value) {
+                            tinggiHolder.clear();
+                            setState(() {
+                              tinggi = value;
+                            });
+                          },
+                          min: 1,
+                          max: 300,
+                        ),
+                      ),
+                    ),
+                  ),
+                  // End of Slider
 
                   // Border Radius : | input box |
                   Row(
