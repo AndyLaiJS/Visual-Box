@@ -9,9 +9,8 @@ A super simple real-time Box Shadow emulator that follows the syntactical rule o
 </div>
 
 ## TO-DO
-- [ ] Save configuration
-- [ ] Copy configuration into Flutter code
-- [ ] Default to specific properties only 
+- [ ] Save & Load configuration
+- [ ] Copy configuration into a Flutter code
+- [ ] Model Box stays fixed after scrolling down some amount (Sliver)
 - [ ] Color picker
 - [x] Validator for the TextField (they're all disabled atm)
-- [ ] A better design
