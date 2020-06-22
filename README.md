@@ -11,6 +11,6 @@ A super simple real-time Box Shadow emulator that follows the syntactical rule o
 ## TO-DO
 - [ ] Save & Load configuration
 - [ ] Copy configuration into a Flutter code
-- [ ] Model Box stays fixed after scrolling down some amount (Sliver)
+- [x] Model Box stays fixed after scrolling down some amount (via StickyHeader())
 - [ ] Color picker
 - [x] Validator for the TextField (they're all disabled atm)
