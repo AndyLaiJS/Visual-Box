@@ -462,7 +462,7 @@ class _VisualizerState extends State<Visualizer> with SingleTickerProviderStateM
                           onChanged: (value) {
                             setState(() {
                               double val = double.parse(value);
-                              if (0 <= val && val <= 100) {
+                              if (-100 <= val && val <= 100) {
                                 spRadius = double.parse(value);
                               } else {
                                 spRadius = spRadius;
@@ -502,7 +502,7 @@ class _VisualizerState extends State<Visualizer> with SingleTickerProviderStateM
                               spRadius = value;
                             });
                           },
-                          min: 0,
+                          min: -100,
                           max: 100,
                         ),
                       ),
