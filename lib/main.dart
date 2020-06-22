@@ -31,6 +31,12 @@ class _VisualizerState extends State<Visualizer> {
   double x = 0;
   double y = 0;
 
+  final bxHolder = TextEditingController();
+  final opacityHolder = TextEditingController();
+  final brHolder = TextEditingController();
+  final spHolder = TextEditingController();
+  final xHolder = TextEditingController();
+  final yHolder = TextEditingController();
   final Shader linearGradient = LinearGradient(
     colors: <Color>[Color(0xffDA44bb), Color(0xff8921aa)],
   ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
@@ -93,7 +99,8 @@ class _VisualizerState extends State<Visualizer> {
             // End of Title
 
             SizedBox(height: 50),
-
+            
+            // Our Model Box
             Center(
               child: Container(
                 height: 170,
@@ -112,6 +119,7 @@ class _VisualizerState extends State<Visualizer> {
                 ),
               ),
             ),
+            // End of our Model Box
 
             SizedBox(height: 30),
 
@@ -147,11 +155,15 @@ class _VisualizerState extends State<Visualizer> {
                         height: 30,
                         width: 55,
                         child: TextField(
-                          enabled:
-                              false, // TO-DO : a validator to prevent out of bound values
+                          controller: bxHolder,
                           onChanged: (value) {
                             setState(() {
-                              bxRadius = double.parse(value);
+                              double val = double.parse(value);
+                              if (0 <= val && val <= 100) {
+                                bxRadius = double.parse(value);
+                              } else {
+                                bxRadius = bxRadius;
+                              }
                             });
                           },
                           decoration: InputDecoration(
@@ -182,6 +194,7 @@ class _VisualizerState extends State<Visualizer> {
                         child: Slider(
                           value: bxRadius,
                           onChanged: (value) {
+                            bxHolder.clear();
                             setState(() {
                               bxRadius = value;
                             });
@@ -223,7 +236,12 @@ class _VisualizerState extends State<Visualizer> {
                         child: TextField(
                           onChanged: (value) {
                             setState(() {
-                              x = double.parse(value);
+                              double val = double.parse(value);
+                              if (0 <= val && val <= 100) {
+                                x = double.parse(value);
+                              } else {
+                                x = x;
+                              }
                             });
                           },
                           decoration: InputDecoration(
@@ -245,7 +263,12 @@ class _VisualizerState extends State<Visualizer> {
                         child: TextField(
                           onChanged: (value) {
                             setState(() {
-                              y = double.parse(value);
+                              double val = double.parse(value);
+                              if (0 <= val && val <= 100) {
+                                y = double.parse(value);
+                              } else {
+                                y = y;
+                              }
                             });
                           },
                           decoration: InputDecoration(
@@ -278,11 +301,15 @@ class _VisualizerState extends State<Visualizer> {
                         height: 30,
                         width: 55,
                         child: TextField(
-                          enabled:
-                              false, // TO-DO : a validator to prevent out of bound values
+                          controller: opacityHolder,
                           onChanged: (value) {
                             setState(() {
-                              opacity = double.parse(value);
+                              double val = double.parse(value);
+                              if (0 <= val && val <= 1) {
+                                opacity = double.parse(value);
+                              } else {
+                                opacity = opacity;
+                              }
                             });
                           },
                           decoration: InputDecoration(
@@ -313,6 +340,7 @@ class _VisualizerState extends State<Visualizer> {
                         child: Slider(
                           value: opacity,
                           onChanged: (value) {
+                            opacityHolder.clear();
                             setState(() {
                               opacity = value;
                             });
@@ -338,11 +366,15 @@ class _VisualizerState extends State<Visualizer> {
                         height: 30,
                         width: 55,
                         child: TextField(
-                          enabled:
-                              false, // TO-DO : a validator to prevent out of bound values
+                          controller: brHolder,
                           onChanged: (value) {
                             setState(() {
-                              brRadius = double.parse(value);
+                              double val = double.parse(value);
+                              if (0 <= val && val <= 50) {
+                                brRadius = double.parse(value);
+                              } else {
+                                brRadius = brRadius;
+                              }
                             });
                           },
                           decoration: InputDecoration(
@@ -373,6 +405,7 @@ class _VisualizerState extends State<Visualizer> {
                         child: Slider(
                           value: brRadius,
                           onChanged: (value) {
+                            brHolder.clear();
                             setState(() {
                               brRadius = value;
                             });
@@ -398,11 +431,15 @@ class _VisualizerState extends State<Visualizer> {
                         height: 30,
                         width: 55,
                         child: TextField(
-                          enabled:
-                              false, // TO-DO : a validator to prevent out of bound values
+                          controller: spHolder,
                           onChanged: (value) {
                             setState(() {
-                              spRadius = double.parse(value);
+                              double val = double.parse(value);
+                              if (0 <= val && val <= 100) {
+                                spRadius = double.parse(value);
+                              } else {
+                                spRadius = spRadius;
+                              }
                             });
                           },
                           decoration: InputDecoration(
@@ -433,6 +470,7 @@ class _VisualizerState extends State<Visualizer> {
                         child: Slider(
                           value: spRadius,
                           onChanged: (value) {
+                            spHolder.clear();
                             setState(() {
                               spRadius = value;
                             });
