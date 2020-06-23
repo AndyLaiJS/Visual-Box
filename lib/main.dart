@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:sticky_headers/sticky_headers.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(MyApp());
@@ -35,6 +36,7 @@ class _VisualizerState extends State<Visualizer>
   double x = 0;
   double y = 30;
 
+  final colorHolder = TextEditingController();
   final lebarHolder = TextEditingController();
   final tinggiHolder = TextEditingController();
   final bxHolder = TextEditingController();
@@ -45,6 +47,16 @@ class _VisualizerState extends State<Visualizer>
   final Shader linearGradient = LinearGradient(
     colors: <Color>[Color(0xffDA44bb), Color(0xff8921aa)],
   ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
+
+  // create some values
+  Color pickerColor = Color(0xffffffff);
+  Color currentColor = Color(0xffffffff);
+  String strCurrentColor = "0xffffffff";
+
+  // ValueChanged<Color> callback
+  void changeColor(Color color) {
+    setState(() => pickerColor = color);
+  }
 
   AnimationController controller;
   Animation<double> animation;
@@ -112,12 +124,15 @@ class _VisualizerState extends State<Visualizer>
                         Icons.replay,
                         size: 60,
                       ),
-                      tooltip: "Default",
+                      tooltip: "Reset",
                       onPressed: () {
                         controller
                           ..reset()
                           ..forward();
                         setState(() {
+                          strCurrentColor = "0xffffffff";
+                          currentColor = Color(0xffffffff);
+                          pickerColor = Color(0xffffffff);
                           lebar = 270;
                           tinggi = 170;
                           bxRadius = 20;
@@ -146,7 +161,7 @@ class _VisualizerState extends State<Visualizer>
                     width: lebar,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(bxRadius),
-                      color: Colors.white,
+                      color: pickerColor,
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(opacity),
@@ -182,7 +197,98 @@ class _VisualizerState extends State<Visualizer>
                         // End of sub-header
                         SizedBox(height: 10),
 
-                        // Box Height : | input box |
+                        // Box Color : | input box |
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              width: 125,
+                              child: Text(
+                                "Box Color:",
+                              ),
+                            ),
+                            Container(
+                              height: 30,
+                              width: 95,
+                              child: InkWell(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    child: AlertDialog(
+                                      title: const Text(
+                                        "Pick a Color!",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.purple,
+                                        ),
+                                      ),
+                                      content: SingleChildScrollView(
+                                        child: ColorPicker(
+                                          pickerColor: pickerColor,
+                                          onColorChanged: changeColor,
+                                          showLabel: true,
+                                          pickerAreaHeightPercent: 0.8,
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                          child: Text(
+                                            "Ok",
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.purple,
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            setState(() =>
+                                                currentColor = pickerColor);
+                                            strCurrentColor = currentColor
+                                                .toString()
+                                                .replaceAll("Color(", "");
+                                            strCurrentColor = strCurrentColor
+                                                .replaceAll(")", "");
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                                child: TextField(
+                                  enabled: false,
+                                  controller: colorHolder,
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.all(5),
+                                    hintText: "${strCurrentColor}",
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.black,
+                                        width: 5,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 5),
+                            IconButton(
+                              icon: Icon(
+                                Icons.save,
+                                size: 20,
+                              ),
+                              onPressed: () {
+                                Clipboard.setData(new ClipboardData(
+                                    text: "${strCurrentColor}"));
+                              },
+                            )
+                          ],
+                        ),
+                        // End of Box Color : | i_b |
+
+                        SizedBox(
+                          height: 10,
+                        ),
+
+                        // Box Width : | input box |
                         Row(
                           children: <Widget>[
                             Container(
@@ -220,7 +326,7 @@ class _VisualizerState extends State<Visualizer>
                             )
                           ],
                         ),
-                        // End of Box Height : | i_b |
+                        // End of Box Width : | i_b |
 
                         // Slider
                         Align(
