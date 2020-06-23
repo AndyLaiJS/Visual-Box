@@ -37,6 +37,7 @@ class _VisualizerState extends State<Visualizer>
   double y = 30;
 
   final colorHolder = TextEditingController();
+  final shadowColorHolder = TextEditingController();
   final lebarHolder = TextEditingController();
   final tinggiHolder = TextEditingController();
   final bxHolder = TextEditingController();
@@ -52,10 +53,16 @@ class _VisualizerState extends State<Visualizer>
   Color pickerColor = Color(0xffffffff);
   Color currentColor = Color(0xffffffff);
   String strCurrentColor = "0xffffffff";
+  Color shadowPickerColor = Colors.grey;
+  Color shadowCurrentColor = Colors.grey;
+  String strSCurrentColor = "0xff9e9e9e";
 
   // ValueChanged<Color> callback
   void changeColor(Color color) {
     setState(() => pickerColor = color);
+  }
+  void shadowChangeColor(Color color) {
+    setState(() => shadowPickerColor = color);
   }
 
   AnimationController controller;
@@ -133,6 +140,9 @@ class _VisualizerState extends State<Visualizer>
                           strCurrentColor = "0xffffffff";
                           currentColor = Color(0xffffffff);
                           pickerColor = Color(0xffffffff);
+                          strSCurrentColor = "0xff9e9e9e";
+                          shadowCurrentColor = Colors.grey;
+                          shadowPickerColor = Colors.grey;
                           lebar = 270;
                           tinggi = 170;
                           bxRadius = 20;
@@ -164,7 +174,7 @@ class _VisualizerState extends State<Visualizer>
                       color: pickerColor,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(opacity),
+                          color: shadowCurrentColor.withOpacity(opacity),
                           blurRadius: brRadius,
                           spreadRadius: spRadius,
                           offset: Offset(x, y),
@@ -211,6 +221,7 @@ class _VisualizerState extends State<Visualizer>
                               width: 95,
                               child: InkWell(
                                 onTap: () {
+                                  // the Color Picker
                                   showDialog(
                                     context: context,
                                     child: AlertDialog(
@@ -251,6 +262,7 @@ class _VisualizerState extends State<Visualizer>
                                         ),
                                       ],
                                     ),
+                                    // End of Color Picker
                                   );
                                 },
                                 child: TextField(
@@ -276,6 +288,7 @@ class _VisualizerState extends State<Visualizer>
                                 size: 20,
                               ),
                               onPressed: () {
+                                // allows copy pasting via the button
                                 Clipboard.setData(new ClipboardData(
                                     text: "${strCurrentColor}"));
                               },
@@ -497,6 +510,96 @@ class _VisualizerState extends State<Visualizer>
                         ),
                         // End of sub-header
                         SizedBox(height: 10),
+
+                        // Shadow Color : | input box |
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              width: 125,
+                              child: Text(
+                                "Shadow Color:",
+                              ),
+                            ),
+                            Container(
+                              height: 30,
+                              width: 95,
+                              child: InkWell(
+                                onTap: () {
+                                  // the Color Picker
+                                  showDialog(
+                                    context: context,
+                                    child: AlertDialog(
+                                      title: const Text(
+                                        "Pick a Color!",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.purple,
+                                        ),
+                                      ),
+                                      content: SingleChildScrollView(
+                                        child: ColorPicker(
+                                          pickerColor: shadowPickerColor,
+                                          onColorChanged: shadowChangeColor,
+                                          showLabel: true,
+                                          pickerAreaHeightPercent: 0.8,
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                          child: Text(
+                                            "Ok",
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.purple,
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            setState(() =>
+                                                shadowCurrentColor = shadowPickerColor);
+                                            strSCurrentColor = shadowCurrentColor
+                                                .toString()
+                                                .replaceAll("Color(", "");
+                                            strSCurrentColor = strSCurrentColor
+                                                .replaceAll(")", "");
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                    // End of Color Picker
+                                  );
+                                },
+                                child: TextField(
+                                  enabled: false,
+                                  controller: shadowColorHolder,
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.all(5),
+                                    hintText: "${strSCurrentColor}",
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.black,
+                                        width: 5,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 5),
+                            IconButton(
+                              icon: Icon(
+                                Icons.save,
+                                size: 20,
+                              ),
+                              onPressed: () {
+                                // allows copy pasting via the button
+                                Clipboard.setData(new ClipboardData(
+                                    text: "${strSCurrentColor}"));
+                              },
+                            )
+                          ],
+                        ),
+                        // End of Box Color : | i_b |
 
                         // Offset
                         Row(
