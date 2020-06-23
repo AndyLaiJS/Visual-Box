@@ -4,8 +4,9 @@ A super simple real-time Box Shadow emulator that follows the syntactical rule o
 
 ## Screenshots
 <div style="display: flex; justify-content: between;">
-  <img style="margin-left: 10px;" src="screenshots/Home1.png" width="25%">
-  <img style="margin-left: 10px;" src="screenshots/Home2.png" width="25%">
+  <img style="margin-left: 10px;" src="screenshots/Home1.png" width="33%">
+  <img style="margin-left: 10px;" src="screenshots/Home2.png" width="33%">
+  <img style="margin-left: 10px;" src="screenshots/Home3.png" width="33%">
 </div>
 
 ## TO-DO
