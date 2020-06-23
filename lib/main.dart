@@ -284,13 +284,16 @@ class _VisualizerState extends State<Visualizer>
                             SizedBox(width: 5),
                             IconButton(
                               icon: Icon(
-                                Icons.save,
+                                Icons.swap_vert,
                                 size: 20,
                               ),
+                              tooltip: "Swap to Shadow's Color",
                               onPressed: () {
-                                // allows copy pasting via the button
-                                Clipboard.setData(new ClipboardData(
-                                    text: "${strCurrentColor}"));
+                                setState(() {
+                                  strCurrentColor = strSCurrentColor;
+                                  currentColor = shadowCurrentColor;
+                                  pickerColor = shadowPickerColor;
+                                });
                               },
                             )
                           ],
@@ -588,18 +591,23 @@ class _VisualizerState extends State<Visualizer>
                             SizedBox(width: 5),
                             IconButton(
                               icon: Icon(
-                                Icons.save,
+                                Icons.swap_vert,
                                 size: 20,
                               ),
+                              tooltip: "Swap to Box's Color",
                               onPressed: () {
-                                // allows copy pasting via the button
-                                Clipboard.setData(new ClipboardData(
-                                    text: "${strSCurrentColor}"));
+                                setState(() {
+                                  strSCurrentColor = strCurrentColor;
+                                  shadowCurrentColor = currentColor;
+                                  shadowPickerColor = pickerColor;
+                                });
                               },
                             )
                           ],
                         ),
                         // End of Box Color : | i_b |
+
+                        SizedBox(height: 10),
 
                         // Offset
                         Row(
