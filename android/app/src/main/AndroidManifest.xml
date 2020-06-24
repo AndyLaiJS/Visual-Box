@@ -7,7 +7,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="Shadow Visualizer"
+        android:label="Visual Box"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
