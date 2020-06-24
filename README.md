@@ -1,4 +1,4 @@
-# Box Visualizer
+# Visual Box
 
 A super simple real-time Box Shadow emulator that follows the syntactical rule of Flutter in generating the Box Shadow
 
