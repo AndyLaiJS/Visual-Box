@@ -61,6 +61,7 @@ class _VisualizerState extends State<Visualizer>
   void changeColor(Color color) {
     setState(() => pickerColor = color);
   }
+
   void shadowChangeColor(Color color) {
     setState(() => shadowPickerColor = color);
   }
@@ -98,38 +99,41 @@ class _VisualizerState extends State<Visualizer>
             // Title
             Row(
               children: <Widget>[
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.all(30),
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                          "Box\nVisualizer",
+                Padding(
+                  padding: const EdgeInsets.all(30),
+                  child: Stack(
+                    children: <Widget>[
+                      Container(
+                        height: 130,
+                        child: Text(
+                          "Visual\nBox",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 50,
                             foreground: Paint()..shader = linearGradient,
                           ),
                         ),
-                        Container(
+                      ),
+                      Positioned(
+                        top: 115,
+                        child: Container(
                           height: 10,
-                          width: 220,
+                          width: 250,
                           color: Colors.black,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 RotationTransition(
                   turns: animation,
                   child: Container(
-                    height: 100,
-                    width: 100,
+                    height: 80,
+                    width: 80,
                     child: IconButton(
                       icon: Icon(
                         Icons.replay,
-                        size: 60,
+                        size: 50,
                       ),
                       tooltip: "Reset",
                       onPressed: () {
@@ -154,6 +158,63 @@ class _VisualizerState extends State<Visualizer>
                         });
                       },
                     ),
+                  ),
+                ),
+                Container(
+                  height: 80,
+                  width: 80,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.content_copy,
+                      size: 45,
+                    ),
+                    tooltip: "Copy to ClipBoard",
+                    onPressed: () {
+                      setState(() {
+                        Clipboard.setData(
+                          new ClipboardData(
+                            text: 
+                            """
+Container(
+  padding: EdgeInsets.all(50), 
+  child: Center(
+    child: Container(
+      height: $tinggi,
+      width: $lebar,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular($bxRadius),
+        color: $pickerColor,
+        boxShadow: [
+          BoxShadow(
+            color: shadowCurrentColor.withOpacity($opacity),
+            blurRadius: $brRadius,
+            spreadRadius: $spRadius,
+            offset: Offset($x, $y),
+          ),
+        ],
+      ),
+    ),
+  ),
+),
+                            """
+                          )
+                        );
+                        strCurrentColor = "0xffffffff";
+                        currentColor = Color(0xffffffff);
+                        pickerColor = Color(0xffffffff);
+                        strSCurrentColor = "0xff9e9e9e";
+                        shadowCurrentColor = Colors.grey;
+                        shadowPickerColor = Colors.grey;
+                        lebar = 270;
+                        tinggi = 170;
+                        bxRadius = 20;
+                        opacity = 0.3;
+                        brRadius = 50;
+                        spRadius = -11;
+                        x = 0;
+                        y = 30;
+                      });
+                    },
                   ),
                 ),
               ],
@@ -557,11 +618,12 @@ class _VisualizerState extends State<Visualizer>
                                             ),
                                           ),
                                           onPressed: () {
-                                            setState(() =>
-                                                shadowCurrentColor = shadowPickerColor);
-                                            strSCurrentColor = shadowCurrentColor
-                                                .toString()
-                                                .replaceAll("Color(", "");
+                                            setState(() => shadowCurrentColor =
+                                                shadowPickerColor);
+                                            strSCurrentColor =
+                                                shadowCurrentColor
+                                                    .toString()
+                                                    .replaceAll("Color(", "");
                                             strSCurrentColor = strSCurrentColor
                                                 .replaceAll(")", "");
                                             Navigator.of(context).pop();
