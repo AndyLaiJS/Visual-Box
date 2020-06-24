@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 import 'package:flutter/services.dart';
+import 'package:share/share.dart';
 
 void main() {
   runApp(MyApp());
@@ -165,16 +166,14 @@ class _VisualizerState extends State<Visualizer>
                   width: 80,
                   child: IconButton(
                     icon: Icon(
-                      Icons.content_copy,
+                      Icons.share,
                       size: 45,
                     ),
                     tooltip: "Copy to ClipBoard",
                     onPressed: () {
                       setState(() {
-                        Clipboard.setData(
-                          new ClipboardData(
-                            text: 
-                            """
+                        Share.share(
+                          """
 Container(
   padding: EdgeInsets.all(50), 
   child: Center(
@@ -196,23 +195,8 @@ Container(
     ),
   ),
 ),
-                            """
-                          )
+                          """
                         );
-                        strCurrentColor = "0xffffffff";
-                        currentColor = Color(0xffffffff);
-                        pickerColor = Color(0xffffffff);
-                        strSCurrentColor = "0xff9e9e9e";
-                        shadowCurrentColor = Colors.grey;
-                        shadowPickerColor = Colors.grey;
-                        lebar = 270;
-                        tinggi = 170;
-                        bxRadius = 20;
-                        opacity = 0.3;
-                        brRadius = 50;
-                        spRadius = -11;
-                        x = 0;
-                        y = 30;
                       });
                     },
                   ),
@@ -942,7 +926,18 @@ Container(
               // End of Setting,
             ),
 
+            SizedBox(height: 10), // I'm not proud of this
+            Center(
+              child: Text(
+                "© What Should I Do?",
+                style: TextStyle(
+                  color: Colors.black26,
+                  fontSize: 10,
+                )
+              ),
+            ),
             SizedBox(height: 20), // I'm not proud of this
+
           ],
         ),
       ),
