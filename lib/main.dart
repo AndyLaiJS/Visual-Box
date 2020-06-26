@@ -37,14 +37,14 @@ class _VisualizerState extends State<Visualizer>
   double x = 0;
   double y = 30;
 
-  final colorHolder = TextEditingController();
-  final shadowColorHolder = TextEditingController();
-  final lebarHolder = TextEditingController();
-  final tinggiHolder = TextEditingController();
-  final bxHolder = TextEditingController();
-  final opacityHolder = TextEditingController();
-  final brHolder = TextEditingController();
-  final spHolder = TextEditingController();
+  var colorHolder = TextEditingController();
+  var shadowColorHolder = TextEditingController();
+  var lebarHolder = TextEditingController();
+  var tinggiHolder = TextEditingController();
+  var bxHolder = TextEditingController();
+  var opacityHolder = TextEditingController();
+  var brHolder = TextEditingController();
+  var spHolder = TextEditingController();
 
   final Shader linearGradient = LinearGradient(
     colors: <Color>[Color(0xffDA44bb), Color(0xff8921aa)],
@@ -99,6 +99,7 @@ class _VisualizerState extends State<Visualizer>
           children: <Widget>[
             // Title
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(30),
@@ -156,6 +157,14 @@ class _VisualizerState extends State<Visualizer>
                           spRadius = -11;
                           x = 0;
                           y = 30;
+                          colorHolder.clear();
+                          shadowColorHolder.clear();
+                          lebarHolder.clear();
+                          tinggiHolder.clear();
+                          bxHolder.clear();
+                          opacityHolder.clear();
+                          brHolder.clear();
+                          spHolder.clear();
                         });
                       },
                     ),
@@ -169,11 +178,10 @@ class _VisualizerState extends State<Visualizer>
                       Icons.share,
                       size: 45,
                     ),
-                    tooltip: "Copy to ClipBoard",
+                    tooltip: "Share",
                     onPressed: () {
                       setState(() {
-                        Share.share(
-                          """
+                        Share.share("""
 Container(
   padding: EdgeInsets.all(50), 
   child: Center(
@@ -195,8 +203,7 @@ Container(
     ),
   ),
 ),
-                          """
-                        );
+                          """, subject: "Testttt");
                       });
                     },
                   ),
@@ -393,7 +400,7 @@ Container(
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Container(
-                            width: 300,
+                            padding: EdgeInsets.only(right: 50),
                             child: SliderTheme(
                               data: SliderThemeData(
                                 trackShape: CustomTrackShape(),
@@ -458,7 +465,7 @@ Container(
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Container(
-                            width: 300,
+                            padding: EdgeInsets.only(right: 50),
                             child: SliderTheme(
                               data: SliderThemeData(
                                 trackShape: CustomTrackShape(),
@@ -524,7 +531,7 @@ Container(
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Container(
-                            width: 300,
+                            padding: EdgeInsets.only(right: 50),
                             child: SliderTheme(
                               data: SliderThemeData(
                                 trackShape: CustomTrackShape(),
@@ -766,7 +773,7 @@ Container(
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Container(
-                            width: 300,
+                            padding: EdgeInsets.only(right: 50),
                             child: SliderTheme(
                               data: SliderThemeData(
                                 trackShape: CustomTrackShape(),
@@ -832,7 +839,7 @@ Container(
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Container(
-                            width: 300,
+                            padding: EdgeInsets.only(right: 50),
                             child: SliderTheme(
                               data: SliderThemeData(
                                 trackShape: CustomTrackShape(),
@@ -898,7 +905,7 @@ Container(
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Container(
-                            width: 300,
+                            padding: EdgeInsets.only(right: 50),
                             child: SliderTheme(
                               data: SliderThemeData(
                                 trackShape: CustomTrackShape(),
@@ -928,16 +935,13 @@ Container(
 
             SizedBox(height: 10), // I'm not proud of this
             Center(
-              child: Text(
-                "© What Should I Do?",
-                style: TextStyle(
-                  color: Colors.black26,
-                  fontSize: 10,
-                )
-              ),
+              child: Text("© What Should I Do?",
+                  style: TextStyle(
+                    color: Colors.black26,
+                    fontSize: 10,
+                  )),
             ),
             SizedBox(height: 20), // I'm not proud of this
-
           ],
         ),
       ),
