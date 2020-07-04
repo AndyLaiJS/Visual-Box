@@ -103,28 +103,26 @@ class _VisualizerState extends State<Visualizer>
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(30),
-                  child: Stack(
-                    children: <Widget>[
-                      Container(
-                        height: 130,
-                        child: Text(
-                          "Visual\nBox",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 50,
-                            foreground: Paint()..shader = linearGradient,
+                  child: FittedBox(
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          child: Text(
+                            "Visual\nBox",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 50,
+                              foreground: Paint()..shader = linearGradient,
+                            ),
                           ),
                         ),
-                      ),
-                      Positioned(
-                        top: 115,
-                        child: Container(
+                        Container(
                           height: 10,
-                          width: 250,
+                          width: 140,
                           color: Colors.black,
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 RotationTransition(
@@ -193,7 +191,7 @@ Container(
         color: $pickerColor,
         boxShadow: [
           BoxShadow(
-            color: shadowCurrentColor.withOpacity($opacity),
+            color: $shadowCurrentColor.withOpacity($opacity),
             blurRadius: $brRadius,
             spreadRadius: $spRadius,
             offset: Offset($x, $y),
