@@ -21,6 +21,8 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  flutter_native_admob: ^2.1.0
+  firebase_admob: ^0.9.3+2
   share: ^0.6.4+3
   sticky_headers: "^0.1.8"
   flutter_colorpicker: ^0.3.4
